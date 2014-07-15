@@ -69,6 +69,16 @@ public class ContactServlet extends HttpServlet {
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
 
+            String name = null;
+            String mobile = null;
+            String vpmn = null;
+            String email = null;
+            String homeAddress = null;
+            String officeAddress = null;
+            String memo = null;
+            String job = null;
+            String jobLevel = null;
+
             try {
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
             } catch (Exception ex) {
@@ -83,15 +93,25 @@ public class ContactServlet extends HttpServlet {
                 stmt = connection.createStatement();
                 rs = stmt.executeQuery("select * from contact where id=" + request.getParameter("contactId"));
                 if(rs.next()) {
-                    response.getWriter().println("Name: " + rs.getString("name"));
-                    response.getWriter().println("Mobile: " + rs.getString("mobile"));
-                    response.getWriter().println("Vpmn: " + rs.getString("vpmn"));
-                    response.getWriter().println("Email: " + rs.getString("email"));
-                    response.getWriter().println("HomeAddress: " + rs.getString("home_address"));
-                    response.getWriter().println("OfficeAddress: " + rs.getString("office_address"));
-                    response.getWriter().println("Memo: " + rs.getString("memo"));
-                    response.getWriter().println("Job: " + rs.getString("job"));
-                    response.getWriter().println("JobLevel: " + rs.getString("job_level"));
+                    name = rs.getString("name");
+                    mobile = rs.getString("mobile");
+                    vpmn = rs.getString("vpmn");
+                    email = rs.getString("email");
+                    homeAddress = rs.getString("home_address");
+                    officeAddress = rs.getString("office_address");
+                    memo = rs.getString("memo");
+                    job = rs.getString("job");
+                    jobLevel = rs.getString("job_level");
+
+                    response.getWriter().println("Name: " + name);
+                    response.getWriter().println("Mobile: " + mobile);
+                    response.getWriter().println("Vpmn: " + vpmn);
+                    response.getWriter().println("Email: " + email);
+                    response.getWriter().println("HomeAddress: " + homeAddress);
+                    response.getWriter().println("OfficeAddress: " + officeAddress);
+                    response.getWriter().println("Memo: " + memo);
+                    response.getWriter().println("Job: " + job);
+                    response.getWriter().println("JobLevel: " + jobLevel);
                 } else {
                     response.getWriter().println("Contact not found.");
                 }
@@ -105,6 +125,7 @@ public class ContactServlet extends HttpServlet {
                 try {
                     rs.close();
                 } catch(Exception e) {
+
 
                 }
             }
