@@ -102,16 +102,6 @@ public class ContactServlet extends HttpServlet {
                     memo = rs.getString("memo");
                     job = rs.getString("job");
                     jobLevel = rs.getString("job_level");
-
-                    response.getWriter().println("Name: " + name);
-                    response.getWriter().println("Mobile: " + mobile);
-                    response.getWriter().println("Vpmn: " + vpmn);
-                    response.getWriter().println("Email: " + email);
-                    response.getWriter().println("HomeAddress: " + homeAddress);
-                    response.getWriter().println("OfficeAddress: " + officeAddress);
-                    response.getWriter().println("Memo: " + memo);
-                    response.getWriter().println("Job: " + job);
-                    response.getWriter().println("JobLevel: " + jobLevel);
                 } else {
                     response.getWriter().println("Contact not found.");
                 }
@@ -145,6 +135,17 @@ public class ContactServlet extends HttpServlet {
 
                 }
             }
+
+            response.getWriter().println("Name: " + name);
+            response.getWriter().println("Mobile: " + mobile);
+            response.getWriter().println("Vpmn: " + vpmn);
+            response.getWriter().println("Email: " + email);
+            response.getWriter().println("HomeAddress: " + homeAddress);
+            response.getWriter().println("OfficeAddress: " + officeAddress);
+            response.getWriter().println("Memo: " + memo);
+            response.getWriter().println("Job: " + job);
+            response.getWriter().println("JobLevel: " + jobLevel);
+
         }
     }
 }
