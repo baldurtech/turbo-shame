@@ -17,6 +17,55 @@ public class ContactServlet extends HttpServlet {
         throws IOException, ServletException {
         if(request.getParameter("contactId") == null) {
             response.getWriter().println("Get all contacts.");
+            try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+            } catch (Exception ex) {
+                // handle the error
+            }
+
+            Connection connection = null;
+            Statement stmt = null;
+            ResultSet rs = null;
+            try {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
+                stmt = connection.createStatement();
+                rs = stmt.executeQuery("select * from contact");
+                while(rs.next()) {
+                    response.getWriter().println("Id: " + rs.getLong("id"));
+                    response.getWriter().println("Name: " + rs.getString("name"));
+                    response.getWriter().println("Mobile: " + rs.getString("mobile"));
+                    response.getWriter().println("Vpmn: " + rs.getString("vpmn"));
+                    response.getWriter().println("Job: " + rs.getString("job"));
+                }
+            } catch(SQLException sqle) {
+                response.getWriter().println("Cannot connect to DB.");
+                response.getWriter().println(sqle.getMessage());
+                sqle.printStackTrace();
+            }
+
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch(Exception e) {
+
+                }
+            }
+
+            if(stmt != null) {
+                try {
+                    stmt.close();
+                } catch(Exception e) {
+
+                }
+            }
+
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch(Exception e) {
+
+                }
+            }
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
 
