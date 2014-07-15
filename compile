@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+echo "Compile"
+
+mkdir -p target/classes target/test-classes
+
+CLASSPATH=target/classes:target/test-classes
+
+for JARFILE in lib/*.jar; do
+    CLASSPATH=$CLASSPATH:$JARFILE
+done
+
+CLASSPATH_RUNTIME=$CLASSPATH
+[[ -d lib-runtime ]] && for JARFILE in lib-runtime/*.jar; do
+    CLASSPATH_RUNTIME=$CLASSPATH_RUNTIME:$JARFILE
+done
+
+CLASSPATH_TEST=$CLASSPATH_RUNTIME
+[[ -d lib-test ]] && for JARFILE in lib-test/*.jar; do
+    CLASSPATH_TEST=$CLASSPATH_TEST:$JARFILE
+done
+
+javac -d target/classes -classpath $CLASSPATH src/main/java/com/baldurtech/turbo/shame/*.java
+
+
+echo "Compile done"

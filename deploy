@@ -1,0 +1,16 @@
+#!/bin/sh
+
+test -z "$CATALINA_HOME" && echo "CATALINA_HOME not set." && exit 1
+
+WEBAPP=contacts
+
+rm -r -f $CATALINA_HOME/webapps/$WEBAPP
+
+cp -r src/main/webapp $CATALINA_HOME/webapps/$WEBAPP
+cp -r target/classes $CATALINA_HOME/webapps/$WEBAPP/WEB-INF/
+
+cp -r lib $CATALINA_HOME/webapps/$WEBAPP/WEB-INF/
+[[ -d lib-runtime ]] && cp lib-runtime/* $CATALINA_HOME/webapps/$WEBAPP/WEB-INF/lib/
+rm $CATALINA_HOME/webapps/$WEBAPP/WEB-INF/lib/servlet-api.jar
+
+echo "Deploy done."
