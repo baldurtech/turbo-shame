@@ -87,6 +87,7 @@ public class ContactServlet extends HttpServlet {
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
 
+            Long id = null;
             String name = null;
             String mobile = null;
             String vpmn = null;
@@ -111,6 +112,7 @@ public class ContactServlet extends HttpServlet {
                 stmt = connection.createStatement();
                 rs = stmt.executeQuery("select * from contact where id=" + request.getParameter("contactId"));
                 if(rs.next()) {
+                    id = rs.getLong("id");
                     name = rs.getString("name");
                     mobile = rs.getString("mobile");
                     vpmn = rs.getString("vpmn");
@@ -120,8 +122,6 @@ public class ContactServlet extends HttpServlet {
                     memo = rs.getString("memo");
                     job = rs.getString("job");
                     jobLevel = rs.getString("job_level");
-                } else {
-                    response.getWriter().println("Contact not found.");
                 }
             } catch(SQLException sqle) {
                 response.getWriter().println("Cannot connect to DB.");
@@ -154,16 +154,19 @@ public class ContactServlet extends HttpServlet {
                 }
             }
 
-            response.getWriter().println("Name: " + name);
-            response.getWriter().println("Mobile: " + mobile);
-            response.getWriter().println("Vpmn: " + vpmn);
-            response.getWriter().println("Email: " + email);
-            response.getWriter().println("HomeAddress: " + homeAddress);
-            response.getWriter().println("OfficeAddress: " + officeAddress);
-            response.getWriter().println("Memo: " + memo);
-            response.getWriter().println("Job: " + job);
-            response.getWriter().println("JobLevel: " + jobLevel);
-
+            if(id != null) {
+                response.getWriter().println("Name: " + name);
+                response.getWriter().println("Mobile: " + mobile);
+                response.getWriter().println("Vpmn: " + vpmn);
+                response.getWriter().println("Email: " + email);
+                response.getWriter().println("HomeAddress: " + homeAddress);
+                response.getWriter().println("OfficeAddress: " + officeAddress);
+                response.getWriter().println("Memo: " + memo);
+                response.getWriter().println("Job: " + job);
+                response.getWriter().println("JobLevel: " + jobLevel);
+            } else {
+                response.getWriter().println("Contact not found!");
+            }
         }
     }
 }
