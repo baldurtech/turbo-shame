@@ -35,63 +35,7 @@ public class ContactServlet extends HttpServlet {
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
 
-            Map contact = new HashMap();
-
-            try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-            } catch (Exception ex) {
-                // handle the error
-            }
-
-            Connection connection = null;
-            Statement stmt = null;
-            ResultSet rs = null;
-            try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
-                stmt = connection.createStatement();
-                rs = stmt.executeQuery("select * from contact where id=" + request.getParameter("contactId"));
-                if(rs.next()) {
-                    contact.put("id", rs.getLong("id"));
-                    contact.put("name", rs.getString("name"));
-                    contact.put("mobile", rs.getString("mobile"));
-                    contact.put("vpmn", rs.getString("vpmn"));
-                    contact.put("email", rs.getString("email"));
-                    contact.put("homeAddress", rs.getString("home_address"));
-                    contact.put("officeAddress", rs.getString("office_address"));
-                    contact.put("memo", rs.getString("memo"));
-                    contact.put("job", rs.getString("job"));
-                    contact.put("jobLevel", rs.getString("job_level"));
-                }
-            } catch(SQLException sqle) {
-                response.getWriter().println("Cannot connect to DB.");
-                response.getWriter().println(sqle.getMessage());
-                sqle.printStackTrace();
-            }
-
-            if(rs != null) {
-                try {
-                    rs.close();
-                } catch(Exception e) {
-
-
-                }
-            }
-
-            if(stmt != null) {
-                try {
-                    stmt.close();
-                } catch(Exception e) {
-
-                }
-            }
-
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch(Exception e) {
-
-                }
-            }
+            Map contact = getContactById(request.getParameter("contactId"));
 
             if(contact.get("id") != null) {
                 response.getWriter().println("Name: " + contact.get("name"));
@@ -164,5 +108,65 @@ public class ContactServlet extends HttpServlet {
             }
         }
         return contacts;
+    }
+
+    private Map getContactById(String id) {
+        Map contact = new HashMap();
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (Exception ex) {
+            // handle the error
+        }
+
+        Connection connection = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
+            stmt = connection.createStatement();
+            rs = stmt.executeQuery("select * from contact where id=" + id);
+            if(rs.next()) {
+                contact.put("id", rs.getLong("id"));
+                contact.put("name", rs.getString("name"));
+                contact.put("mobile", rs.getString("mobile"));
+                contact.put("vpmn", rs.getString("vpmn"));
+                contact.put("email", rs.getString("email"));
+                contact.put("homeAddress", rs.getString("home_address"));
+                contact.put("officeAddress", rs.getString("office_address"));
+                contact.put("memo", rs.getString("memo"));
+                contact.put("job", rs.getString("job"));
+                contact.put("jobLevel", rs.getString("job_level"));
+            }
+        } catch(SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+        if(rs != null) {
+            try {
+                rs.close();
+            } catch(Exception e) {
+
+
+            }
+        }
+
+        if(stmt != null) {
+            try {
+                stmt.close();
+            } catch(Exception e) {
+
+            }
+        }
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch(Exception e) {
+
+            }
+        }
+
+        return contact;
     }
 }
