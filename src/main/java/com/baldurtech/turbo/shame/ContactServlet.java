@@ -29,10 +29,9 @@ public class ContactServlet extends HttpServlet {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
             stmt = connection.createStatement();
-            rs = stmt.executeQuery("select * from contact where id=1");
+            rs = stmt.executeQuery("select * from contact where id=" + request.getParameter("contactId"));
             rs.next();
             response.getWriter().println(rs.getString("name"));
-            connection.close();
         } catch(SQLException sqle) {
             response.getWriter().println("Cannot connect to DB.");
             response.getWriter().println(sqle.getMessage());
