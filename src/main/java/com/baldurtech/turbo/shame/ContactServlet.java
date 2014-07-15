@@ -47,13 +47,6 @@ public class ContactServlet extends HttpServlet {
                     contact.put("job", rs.getString("job"));
 
                     contacts.add(contact);
-
-                    response.getWriter().println("Id: " + contact.get("id"));
-                    response.getWriter().println("Name: " + contact.get("name"));
-                    response.getWriter().println("Mobile: " + contact.get("mobile"));
-                    response.getWriter().println("Vpmn: " + contact.get("vpmn"));
-                    response.getWriter().println("Job: " + contact.get("job"));
-
                 }
             } catch(SQLException sqle) {
                 response.getWriter().println("Cannot connect to DB.");
@@ -83,6 +76,16 @@ public class ContactServlet extends HttpServlet {
                 } catch(Exception e) {
 
                 }
+            }
+
+            for(Object obj: contacts) {
+                Map contact = (Map) obj;
+
+                response.getWriter().println("Id: " + contact.get("id"));
+                response.getWriter().println("Name: " + contact.get("name"));
+                response.getWriter().println("Mobile: " + contact.get("mobile"));
+                response.getWriter().println("Vpmn: " + contact.get("vpmn"));
+                response.getWriter().println("Job: " + contact.get("job"));
             }
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
