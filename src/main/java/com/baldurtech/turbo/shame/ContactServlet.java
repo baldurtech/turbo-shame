@@ -30,16 +30,19 @@ public class ContactServlet extends HttpServlet {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select * from contact where id=" + request.getParameter("contactId"));
-            rs.next();
-            response.getWriter().println("Name: " + rs.getString("name"));
-            response.getWriter().println("Mobile: " + rs.getString("mobile"));
-            response.getWriter().println("Vpmn: " + rs.getString("vpmn"));
-            response.getWriter().println("Email: " + rs.getString("email"));
-            response.getWriter().println("HomeAddress: " + rs.getString("home_address"));
-            response.getWriter().println("OfficeAddress: " + rs.getString("office_address"));
-            response.getWriter().println("Memo: " + rs.getString("memo"));
-            response.getWriter().println("Job: " + rs.getString("job"));
-            response.getWriter().println("JobLevel: " + rs.getString("job_level"));
+            if(rs.next()) {
+                response.getWriter().println("Name: " + rs.getString("name"));
+                response.getWriter().println("Mobile: " + rs.getString("mobile"));
+                response.getWriter().println("Vpmn: " + rs.getString("vpmn"));
+                response.getWriter().println("Email: " + rs.getString("email"));
+                response.getWriter().println("HomeAddress: " + rs.getString("home_address"));
+                response.getWriter().println("OfficeAddress: " + rs.getString("office_address"));
+                response.getWriter().println("Memo: " + rs.getString("memo"));
+                response.getWriter().println("Job: " + rs.getString("job"));
+                response.getWriter().println("JobLevel: " + rs.getString("job_level"));
+            } else {
+                response.getWriter().println("Contact not found.");
+            }
         } catch(SQLException sqle) {
             response.getWriter().println("Cannot connect to DB.");
             response.getWriter().println(sqle.getMessage());
