@@ -1,5 +1,10 @@
 package com.baldurtech.turbo.shame;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +22,8 @@ public class ContactServlet extends HttpServlet {
         throws IOException, ServletException {
         if(request.getParameter("contactId") == null) {
             response.getWriter().println("Get all contacts.");
+            List contacts = new ArrayList();
+
             try {
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
             } catch (Exception ex) {
@@ -31,11 +38,22 @@ public class ContactServlet extends HttpServlet {
                 stmt = connection.createStatement();
                 rs = stmt.executeQuery("select * from contact");
                 while(rs.next()) {
-                    response.getWriter().println("Id: " + rs.getLong("id"));
-                    response.getWriter().println("Name: " + rs.getString("name"));
-                    response.getWriter().println("Mobile: " + rs.getString("mobile"));
-                    response.getWriter().println("Vpmn: " + rs.getString("vpmn"));
-                    response.getWriter().println("Job: " + rs.getString("job"));
+                    Map contact = new HashMap();
+
+                    contact.put("id", rs.getLong("id"));
+                    contact.put("name", rs.getString("name"));
+                    contact.put("mobile", rs.getString("mobile"));
+                    contact.put("vpmn", rs.getString("vpmn"));
+                    contact.put("job", rs.getString("job"));
+
+                    contacts.add(contact);
+
+                    response.getWriter().println("Id: " + contact.get("id"));
+                    response.getWriter().println("Name: " + contact.get("name"));
+                    response.getWriter().println("Mobile: " + contact.get("mobile"));
+                    response.getWriter().println("Vpmn: " + contact.get("vpmn"));
+                    response.getWriter().println("Job: " + contact.get("job"));
+
                 }
             } catch(SQLException sqle) {
                 response.getWriter().println("Cannot connect to DB.");
