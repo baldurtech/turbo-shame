@@ -33,18 +33,18 @@ public class ContactServlet extends HttpServlet {
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
 
-            Map contact = getContactById(request.getParameter("contactId"));
+            Contact contact = getContactById(request.getParameter("contactId"));
 
-            if(contact.get("id") != null) {
-                response.getWriter().println("Name: " + contact.get("name"));
-                response.getWriter().println("Mobile: " + contact.get("mobile"));
-                response.getWriter().println("Vpmn: " + contact.get("vpmn"));
-                response.getWriter().println("Email: " + contact.get("email"));
-                response.getWriter().println("HomeAddress: " + contact.get("homeAddress"));
-                response.getWriter().println("OfficeAddress: " + contact.get("officeAddress"));
-                response.getWriter().println("Memo: " + contact.get("memo"));
-                response.getWriter().println("Job: " + contact.get("job"));
-                response.getWriter().println("JobLevel: " + contact.get("jobLevel"));
+            if(contact.getId() != null) {
+                response.getWriter().println("Name: "          + contact.getName());
+                response.getWriter().println("Mobile: "        + contact.getMobile());
+                response.getWriter().println("Vpmn: "          + contact.getVpmn());
+                response.getWriter().println("Email: "         + contact.getEmail());
+                response.getWriter().println("HomeAddress: "   + contact.getHomeAddress());
+                response.getWriter().println("OfficeAddress: " + contact.getOfficeAddress());
+                response.getWriter().println("Memo: "          + contact.getMemo());
+                response.getWriter().println("Job: "           + contact.getJob());
+                response.getWriter().println("JobLevel: "      + contact.getJobLevel());
             } else {
                 response.getWriter().println("Contact not found!");
             }
@@ -108,8 +108,8 @@ public class ContactServlet extends HttpServlet {
         return contacts;
     }
 
-    private Map getContactById(String id) {
-        Map contact = new HashMap();
+    private Contact getContactById(String id) {
+        Contact contact = new Contact();
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -125,16 +125,16 @@ public class ContactServlet extends HttpServlet {
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select * from contact where id=" + id);
             if(rs.next()) {
-                contact.put("id", rs.getLong("id"));
-                contact.put("name", rs.getString("name"));
-                contact.put("mobile", rs.getString("mobile"));
-                contact.put("vpmn", rs.getString("vpmn"));
-                contact.put("email", rs.getString("email"));
-                contact.put("homeAddress", rs.getString("home_address"));
-                contact.put("officeAddress", rs.getString("office_address"));
-                contact.put("memo", rs.getString("memo"));
-                contact.put("job", rs.getString("job"));
-                contact.put("jobLevel", rs.getString("job_level"));
+                contact.setId(rs.getLong("id"));
+                contact.setName(rs.getString("name"));
+                contact.setMobile(rs.getString("mobile"));
+                contact.setVpmn(rs.getString("vpmn"));
+                contact.setEmail(rs.getString("email"));
+                contact.setHomeAddress(rs.getString("home_address"));
+                contact.setOfficeAddress(rs.getString("office_address"));
+                contact.setMemo(rs.getString("memo"));
+                contact.setJob(rs.getString("job"));
+                contact.setJobLevel(rs.getInt("job_level"));
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
