@@ -76,54 +76,13 @@ public class ContactServlet extends HttpServlet {
     }
 
     private Contact getContactById(String id) {
-        Contact contact = null;
+        List<Contact> contacts = findAllContactsBySql("select * from contact where id=" + id);
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (Exception ex) {
-            // handle the error
+        if(contacts.size() > 0) {
+            return contacts.get(0);
+        } else {
+            return null;
         }
-
-        Connection connection = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
-            stmt = connection.createStatement();
-            rs = stmt.executeQuery("select * from contact where id=" + id);
-            if(rs.next()) {
-                contact = createContactFromResultSet(rs);
-            }
-        } catch(SQLException sqle) {
-            sqle.printStackTrace();
-        }
-
-        if(rs != null) {
-            try {
-                rs.close();
-            } catch(Exception e) {
-
-
-            }
-        }
-
-        if(stmt != null) {
-            try {
-                stmt.close();
-            } catch(Exception e) {
-
-            }
-        }
-
-        if(connection != null) {
-            try {
-                connection.close();
-            } catch(Exception e) {
-
-            }
-        }
-
-        return contact;
     }
 
     public Contact createContactFromResultSet(ResultSet rs)
