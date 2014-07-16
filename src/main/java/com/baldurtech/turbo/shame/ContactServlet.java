@@ -23,14 +23,12 @@ public class ContactServlet extends HttpServlet {
         if(request.getParameter("contactId") == null) {
             response.getWriter().println("Get all contacts.");
 
-            for(Object obj: getAllContacts()) {
-                Map contact = (Map) obj;
-
-                response.getWriter().println("Id: " + contact.get("id"));
-                response.getWriter().println("Name: " + contact.get("name"));
-                response.getWriter().println("Mobile: " + contact.get("mobile"));
-                response.getWriter().println("Vpmn: " + contact.get("vpmn"));
-                response.getWriter().println("Job: " + contact.get("job"));
+            for(Contact contact: getAllContacts()) {
+                response.getWriter().println("Id: " + contact.getId());
+                response.getWriter().println("Name: " + contact.getName());
+                response.getWriter().println("Mobile: " + contact.getMobile());
+                response.getWriter().println("Vpmn: " + contact.getVpmn());
+                response.getWriter().println("Job: " + contact.getJob());
             }
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
@@ -53,8 +51,8 @@ public class ContactServlet extends HttpServlet {
         }
     }
 
-    private List getAllContacts() {
-        List contacts = new ArrayList();
+    private List<Contact> getAllContacts() {
+        List<Contact> contacts = new ArrayList<Contact>();
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -70,13 +68,13 @@ public class ContactServlet extends HttpServlet {
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select * from contact");
             while(rs.next()) {
-                Map contact = new HashMap();
+                Contact contact = new Contact();
 
-                contact.put("id", rs.getLong("id"));
-                contact.put("name", rs.getString("name"));
-                contact.put("mobile", rs.getString("mobile"));
-                contact.put("vpmn", rs.getString("vpmn"));
-                contact.put("job", rs.getString("job"));
+                contact.setId(rs.getLong("id"));
+                contact.setName(rs.getString("name"));
+                contact.setMobile(rs.getString("mobile"));
+                contact.setVpmn(rs.getString("vpmn"));
+                contact.setJob(rs.getString("job"));
 
                 contacts.add(contact);
             }
