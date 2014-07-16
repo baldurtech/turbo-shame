@@ -68,7 +68,7 @@ public class ContactServlet extends HttpServlet {
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select * from contact");
             while(rs.next()) {
-                contacts.add(getContactFromResultSet(rs));
+                contacts.add(createContactFromResultSet(rs));
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
@@ -117,7 +117,7 @@ public class ContactServlet extends HttpServlet {
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select * from contact where id=" + id);
             if(rs.next()) {
-                contact = getContactFromResultSet(rs);
+                contact = createContactFromResultSet(rs);
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
@@ -151,7 +151,7 @@ public class ContactServlet extends HttpServlet {
         return contact;
     }
 
-    public Contact getContactFromResultSet(ResultSet rs)
+    public Contact createContactFromResultSet(ResultSet rs)
         throws SQLException {
 
         Contact contact = new Contact();
