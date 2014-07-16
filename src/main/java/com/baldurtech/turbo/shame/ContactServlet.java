@@ -35,7 +35,7 @@ public class ContactServlet extends HttpServlet {
 
             Contact contact = getContactById(request.getParameter("contactId"));
 
-            if(contact.getId() != null) {
+            if(contact != null) {
                 response.getWriter().println("Name: "          + contact.getName());
                 response.getWriter().println("Mobile: "        + contact.getMobile());
                 response.getWriter().println("Vpmn: "          + contact.getVpmn());
@@ -101,7 +101,7 @@ public class ContactServlet extends HttpServlet {
     }
 
     private Contact getContactById(String id) {
-        Contact contact = new Contact();
+        Contact contact = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
