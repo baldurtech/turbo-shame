@@ -67,8 +67,15 @@ public class ContactServlet extends HttpServlet {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select * from contact");
-            while(rs.next()) {
-                contacts.add(createContactFromResultSet(rs));
+        } catch(SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+        try {
+            if(rs != null) {
+                while(rs.next()) {
+                    contacts.add(createContactFromResultSet(rs));
+                }
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
