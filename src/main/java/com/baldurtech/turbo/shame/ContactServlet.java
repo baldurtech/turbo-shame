@@ -52,8 +52,7 @@ public class ContactServlet extends HttpServlet {
     }
 
     private List<Contact> getAllContacts() {
-        String sql = "select * from contact";
-        return findAllContactsBySql(sql);
+        return findAllContactsBySql("select * from contact");
     }
 
     public List<Contact> findAllContactsBySql(String sql) {
