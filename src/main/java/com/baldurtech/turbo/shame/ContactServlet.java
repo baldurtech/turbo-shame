@@ -76,7 +76,11 @@ public class ContactServlet extends HttpServlet {
     }
 
     private Contact getContactById(String id) {
-        List<Contact> contacts = findAllContactsBySql("select * from contact where id=" + id);
+        return findFirstContactBySql("select * from contact where id=" + id);
+    }
+
+    public Contact findFirstContactBySql(String sql) {
+        List<Contact> contacts = findAllContactsBySql(sql);
 
         if(contacts.size() > 0) {
             return contacts.get(0);
