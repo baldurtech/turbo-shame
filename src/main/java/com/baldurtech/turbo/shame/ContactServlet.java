@@ -60,46 +60,44 @@ public class ContactServlet extends HttpServlet {
             // handle the error
         }
 
-        Connection connection = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+        DatabaseManager db = new DatabaseManager();
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
-            stmt = connection.createStatement();
-            rs = stmt.executeQuery("select * from contact");
+            db.connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
+            db.statement = db.connection.createStatement();
+            db.resultSet = db.statement.executeQuery("select * from contact");
         } catch(SQLException sqle) {
             sqle.printStackTrace();
         }
 
         try {
-            if(rs != null) {
-                while(rs.next()) {
-                    contacts.add(createContactFromResultSet(rs));
+            if(db.resultSet != null) {
+                while(db.resultSet.next()) {
+                    contacts.add(createContactFromResultSet(db.resultSet));
                 }
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
         }
 
-        if(rs != null) {
+        if(db.resultSet != null) {
             try {
-                rs.close();
+                db.resultSet.close();
             } catch(Exception e) {
 
             }
         }
 
-        if(stmt != null) {
+        if(db.statement != null) {
             try {
-                stmt.close();
+                db.statement.close();
             } catch(Exception e) {
 
             }
         }
 
-        if(connection != null) {
+        if(db.connection != null) {
             try {
-                connection.close();
+                db.connection.close();
             } catch(Exception e) {
 
             }
@@ -176,4 +174,10 @@ public class ContactServlet extends HttpServlet {
 
         return contact;
     }
+}
+
+class DatabaseManager {
+    public Connection connection;
+    public Statement statement;
+    public ResultSet resultSet;
 }
