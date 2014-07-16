@@ -55,20 +55,7 @@ public class ContactServlet extends HttpServlet {
         List<Contact> contacts = new ArrayList<Contact>();
         String sql = "select * from contact";
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (Exception ex) {
-            // handle the error
-        }
-
-        DatabaseManager db = new DatabaseManager();
-        try {
-            db.connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
-            db.statement = db.connection.createStatement();
-            db.resultSet = db.statement.executeQuery(sql);
-        } catch(SQLException sqle) {
-            sqle.printStackTrace();
-        }
+        DatabaseManager db = createDatabaseConnectionAndExecute(sql);
 
         try {
             if(db.resultSet != null) {
@@ -174,6 +161,25 @@ public class ContactServlet extends HttpServlet {
         contact.setJobLevel(rs.getInt("job_level"));
 
         return contact;
+    }
+
+    public DatabaseManager createDatabaseConnectionAndExecute(String sql) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (Exception ex) {
+            // handle the error
+        }
+
+        DatabaseManager db = new DatabaseManager();
+        try {
+            db.connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
+            db.statement = db.connection.createStatement();
+            db.resultSet = db.statement.executeQuery(sql);
+        } catch(SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+        return db;
     }
 }
 
