@@ -14,6 +14,11 @@ public class ContactService {
         return findAllContactsBySql("select * from contact");
     }
 
+    public Contact save(Contact contact) {
+        contact.setId(998L);
+        return contact;
+    }
+
     public List<Contact> findAllContactsBySql(String sql) {
         List<Contact> contacts = new ArrayList<Contact>();
 

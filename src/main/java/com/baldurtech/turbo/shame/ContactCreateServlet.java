@@ -27,6 +27,9 @@ public class ContactCreateServlet extends HttpServlet {
         contact.setJob(request.getParameter("job"));
         contact.setJobLevel(Integer.parseInt(request.getParameter("jobLevel")));
 
-        response.getWriter().println(contact);
+        ContactService contactService = new ContactService();
+        contact = contactService.save(contact);
+
+        response.getWriter().println(contact.getId() + ": " + contact);
     }
 }
