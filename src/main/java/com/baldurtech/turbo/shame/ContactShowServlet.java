@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ContactShowServlet extends HttpServlet {
+public class ContactShowServlet extends AbstractTurboShameServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -26,25 +26,5 @@ public class ContactShowServlet extends HttpServlet {
         } else {
             render(request, response, "contact/not_found");
         }
-    }
-
-    public void render(HttpServletRequest request, HttpServletResponse response,
-                       String page)
-        throws IOException, ServletException {
-
-        render(request, response, page, new HashMap<String, Object>());
-    }
-
-    public void render(HttpServletRequest request, HttpServletResponse response,
-                       String page, Map<String, Object> dataModel)
-        throws IOException, ServletException {
-
-        for(String key: dataModel.keySet()) {
-            request.setAttribute(key, dataModel.get(key));
-        }
-
-        getServletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/" + page + ".jsp")
-            .forward(request, response);
     }
 }
