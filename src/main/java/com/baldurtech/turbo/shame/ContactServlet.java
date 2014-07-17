@@ -21,20 +21,14 @@ public class ContactServlet extends HttpServlet {
                 .forward(request, response);
 
         } else {
-            response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
-
             Contact contact = contactService.getContactById(request.getParameter("contactId"));
 
             if(contact != null) {
-                response.getWriter().println("Name: "          + contact.getName());
-                response.getWriter().println("Mobile: "        + contact.getMobile());
-                response.getWriter().println("Vpmn: "          + contact.getVpmn());
-                response.getWriter().println("Email: "         + contact.getEmail());
-                response.getWriter().println("HomeAddress: "   + contact.getHomeAddress());
-                response.getWriter().println("OfficeAddress: " + contact.getOfficeAddress());
-                response.getWriter().println("Memo: "          + contact.getMemo());
-                response.getWriter().println("Job: "           + contact.getJob());
-                response.getWriter().println("JobLevel: "      + contact.getJobLevel());
+                request.setAttribute("contact", contact);
+
+                getServletContext()
+                    .getRequestDispatcher("/WEB-INF/jsp/contact/show.jsp")
+                    .forward(request, response);
             } else {
                 response.getWriter().println("Contact not found!");
             }
