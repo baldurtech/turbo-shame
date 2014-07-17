@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ContactCreateServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        response.getWriter().println("Create contact!");
+        getServletContext()
+            .getRequestDispatcher("/WEB-INF/jsp/contact/create.jsp")
+            .forward(request, response);
     }
 }
