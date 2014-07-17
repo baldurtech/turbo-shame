@@ -33,4 +33,15 @@
     <servlet-name>contactCreate</servlet-name>
     <url-pattern>/contact/create</url-pattern>
   </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>contactShow</servlet-name>
+    <servlet-class>com.baldurtech.turbo.shame.ContactShowServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>contactShow</servlet-name>
+    <url-pattern>/contact/show</url-pattern>
+  </servlet-mapping>
 </web-app>
