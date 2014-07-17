@@ -30,6 +30,10 @@ public class ContactCreateServlet extends HttpServlet {
         ContactService contactService = new ContactService();
         contact = contactService.save(contact);
 
-        response.getWriter().println(contact.getId() + ": " + contact);
+        if(contact.getId() == null) {
+            response.getWriter().println("Not saved: " + contact);
+        } else {
+            response.getWriter().println(contact.getId() + ": " + contact);
+        }
     }
 }
