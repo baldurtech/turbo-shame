@@ -24,8 +24,15 @@ public class ContactShowServlet extends HttpServlet {
 
             render(request, response, page, dataModel);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            render(request, response, "contact/not_found");
         }
+    }
+
+    public void render(HttpServletRequest request, HttpServletResponse response,
+                       String page)
+        throws IOException, ServletException {
+
+        render(request, response, page, new HashMap<String, Object>());
     }
 
     public void render(HttpServletRequest request, HttpServletResponse response,
