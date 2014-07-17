@@ -9,6 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 public class ContactShowServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        response.getWriter().println("Show contact " + request.getParameter("id"));
+
+        ContactService contactService = new ContactService();
+        Contact contact = contactService.getContactById(request.getParameter("id"));
+
+        if(contact != null) {
+            request.setAttribute("contact", contact);
+
+            getServletContext()
+                .getRequestDispatcher("/WEB-INF/jsp/contact/show.jsp")
+                .forward(request, response);
+        } else {
+            response.getWriter().println("Contact not found!");
+        }
     }
 }
