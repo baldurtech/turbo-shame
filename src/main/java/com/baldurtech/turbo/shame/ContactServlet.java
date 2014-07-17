@@ -20,10 +20,13 @@ import java.sql.Statement;
 public class ContactServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
+
+        ContactService contactService = new ContactService();
+
         if(request.getParameter("contactId") == null) {
             response.getWriter().println("Get all contacts.");
 
-            for(Contact contact: getAllContacts()) {
+            for(Contact contact: contactService.getAllContacts()) {
                 response.getWriter().println("Id: " + contact.getId());
                 response.getWriter().println("Name: " + contact.getName());
                 response.getWriter().println("Mobile: " + contact.getMobile());
@@ -33,7 +36,7 @@ public class ContactServlet extends HttpServlet {
         } else {
             response.getWriter().println("Get contact by id: " + request.getParameter("contactId"));
 
-            Contact contact = getContactById(request.getParameter("contactId"));
+            Contact contact = contactService.getContactById(request.getParameter("contactId"));
 
             if(contact != null) {
                 response.getWriter().println("Name: "          + contact.getName());
@@ -51,7 +54,10 @@ public class ContactServlet extends HttpServlet {
         }
     }
 
-    private List<Contact> getAllContacts() {
+}
+
+class ContactService {
+    public List<Contact> getAllContacts() {
         return findAllContactsBySql("select * from contact");
     }
 
@@ -75,7 +81,7 @@ public class ContactServlet extends HttpServlet {
         return contacts;
     }
 
-    private Contact getContactById(String id) {
+    public Contact getContactById(String id) {
         return findFirstContactBySql("select * from contact where id=" + id);
     }
 
