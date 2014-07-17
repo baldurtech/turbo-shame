@@ -17,6 +17,8 @@ public class ContactShowServlet extends HttpServlet {
         Contact contact = contactService.getContactById(request.getParameter("id"));
 
         if(contact != null) {
+            String page = "contact/show";
+
             Map<String, Object> dataModel = new HashMap<String, Object>();
             dataModel.put("contact", contact);
 
@@ -25,7 +27,7 @@ public class ContactShowServlet extends HttpServlet {
             }
 
             getServletContext()
-                .getRequestDispatcher("/WEB-INF/jsp/contact/show.jsp")
+                .getRequestDispatcher("/WEB-INF/jsp/" + page + ".jsp")
                 .forward(request, response);
         } else {
             response.getWriter().println("Contact not found!");
