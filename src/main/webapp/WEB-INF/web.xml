@@ -44,4 +44,16 @@
     <servlet-name>contactShow</servlet-name>
     <url-pattern>/contact/show</url-pattern>
   </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>contactList</servlet-name>
+    <servlet-class>com.baldurtech.turbo.shame.ContactListServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>contactList</servlet-name>
+    <url-pattern>/contact/list</url-pattern>
+  </servlet-mapping>
+
 </web-app>
