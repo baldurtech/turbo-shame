@@ -1,5 +1,8 @@
 package com.baldurtech.turbo.shame;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +13,9 @@ public class ContactCreateServlet extends AbstractTurboShameServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
 
-        render(request, response, "contact/create");
+        render(request, response, "contact/create", new HashMap<String, Object>(){{
+                    put("contact", new Contact());
+                }});
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +35,10 @@ public class ContactCreateServlet extends AbstractTurboShameServlet {
         contact = contactService.save(contact);
 
         if(contact.getId() == null) {
-            response.getWriter().println("Not saved: " + contact);
+            Map<String, Object> dataModel = new HashMap<String, Object>();
+            dataModel.put("contact", contact);
+
+            render(request, response, "contact/create", dataModel);
         } else {
             response.sendRedirect("show?id=" + contact.getId());
         }
