@@ -15,7 +15,24 @@ public class ContactService {
     }
 
     public Contact save(Contact contact) {
-        contact.setId(998L);
+        String sql = "INSERT INTO `contact` (`id`, `name`, `mobile`, "
+            + "`vpmn`, `email`, `home_address`, `office_address`, `memo`, "
+            + "`job`, `job_level`) "
+            + "VALUES"
+            + "(null,'"
+            + contact.getName() + "','"
+            + contact.getMobile() + "','"
+            + contact.getVpmn() + "','"
+            + contact.getEmail() + "','"
+            + contact.getHomeAddress() + "','"
+            + contact.getOfficeAddress() + "','"
+            + contact.getMemo() + "','"
+            + contact.getJob() + "',"
+            + contact.getJobLevel() + ")";
+
+        System.out.println(sql);
+
+        contact.setId(998998L);
         return contact;
     }
 
