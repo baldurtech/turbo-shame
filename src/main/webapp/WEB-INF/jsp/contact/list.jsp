@@ -17,7 +17,7 @@ List<Contact> contactList = (List<Contact>) request.getAttribute("contactList");
 
       <c:forEach var="contact" items="${contactList}">
       <tr>
-        <td>${contact.name}</td>
+        <td><a href="show?id=${contact.id}">${contact.name}</a></td>
         <td>${contact.mobile} ${contact.vpmn}</td>
       </tr>
       </c:forEach>
