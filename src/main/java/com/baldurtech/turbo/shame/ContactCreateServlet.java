@@ -32,7 +32,7 @@ public class ContactCreateServlet extends AbstractTurboShameServlet {
         if(contact.getId() == null) {
             response.getWriter().println("Not saved: " + contact);
         } else {
-            response.getWriter().println(contact.getId() + ": " + contact);
+            response.sendRedirect("show?id=" + contact.getId());
         }
     }
 }
