@@ -13,4 +13,9 @@ public class ContactCreateServlet extends HttpServlet {
             .getRequestDispatcher("/WEB-INF/jsp/contact/create.jsp")
             .forward(request, response);
     }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException {
+        response.getWriter().println("Yeah! Hang Zai has saved.");
+    }
 }
