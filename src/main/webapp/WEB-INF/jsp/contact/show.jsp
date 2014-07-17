@@ -48,5 +48,6 @@ Contact contact = (Contact) request.getAttribute("contact");
       </tr>
     </table>
     <a href="list">List all contacts</a>
+    <a href="create">Create</a>
   </body>
 </html>

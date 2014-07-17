@@ -42,5 +42,6 @@ if(null == message) message = "";
       </label><br/>
       <input type="submit" value="Create"/><br/>
     </form>
+    <a href="list">List all contacts</a>
   </body>
 </html>

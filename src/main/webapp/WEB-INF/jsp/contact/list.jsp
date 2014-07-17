@@ -23,5 +23,6 @@ List<Contact> contactList = (List<Contact>) request.getAttribute("contactList");
       </c:forEach>
 
     </table>
+    <a href="create">Create</a>
   </body>
 </html>
