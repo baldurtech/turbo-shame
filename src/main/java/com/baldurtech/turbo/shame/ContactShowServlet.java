@@ -1,5 +1,8 @@
 package com.baldurtech.turbo.shame;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +17,12 @@ public class ContactShowServlet extends HttpServlet {
         Contact contact = contactService.getContactById(request.getParameter("id"));
 
         if(contact != null) {
-            request.setAttribute("contact", contact);
+            Map<String, Object> dataModel = new HashMap<String, Object>();
+            dataModel.put("contact", contact);
+
+            for(String key: dataModel.keySet()) {
+                request.setAttribute(key, dataModel.get(key));
+            }
 
             getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/contact/show.jsp")
