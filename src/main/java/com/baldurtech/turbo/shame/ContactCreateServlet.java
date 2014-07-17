@@ -37,6 +37,7 @@ public class ContactCreateServlet extends AbstractTurboShameServlet {
         if(contact.getId() == null) {
             Map<String, Object> dataModel = new HashMap<String, Object>();
             dataModel.put("contact", contact);
+            dataModel.put("flash.message", "Cannot save contact!");
 
             render(request, response, "contact/create", dataModel);
         } else {

@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 Contact contact = (Contact) request.getAttribute("contact");
+String message = (String) request.getAttribute("flash.message");
+if(null == message) message = "";
 %>
 <html>
   <head>
@@ -9,6 +11,7 @@ Contact contact = (Contact) request.getAttribute("contact");
   </head>
   <body>
     <h1>Create contact</h1>
+    <div><%=  message %></div>
     <form method="POST">
       <label>Name:
         <input type="text" name="name" value="${contact.name}"/>
