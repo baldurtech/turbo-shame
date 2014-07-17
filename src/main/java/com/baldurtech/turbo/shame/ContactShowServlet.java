@@ -24,7 +24,7 @@ public class ContactShowServlet extends HttpServlet {
 
             render(request, response, page, dataModel);
         } else {
-            response.getWriter().println("Contact not found!");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
