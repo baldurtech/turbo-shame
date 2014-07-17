@@ -20,6 +20,22 @@ public class ContactCreateServlet extends AbstractTurboShameServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
+
+        ContactService contactService = new ContactService();
+        final Contact contact = contactService.save(createContactFromRequest(request));
+
+        if(contact.getId() == null) {
+            Map<String, Object> dataModel = new HashMap<String, Object>();
+            dataModel.put("contact", contact);
+            dataModel.put("flash.message", "Cannot save contact!");
+
+            render(request, response, "contact/create", dataModel);
+        } else {
+            response.sendRedirect("show?id=" + contact.getId());
+        }
+    }
+
+    public Contact createContactFromRequest(HttpServletRequest request) {
         Contact contact = new Contact();
         contact.setName(request.getParameter("name"));
         contact.setMobile(request.getParameter("mobile"));
@@ -31,17 +47,6 @@ public class ContactCreateServlet extends AbstractTurboShameServlet {
         contact.setJob(request.getParameter("job"));
         contact.setJobLevel(Integer.parseInt(request.getParameter("jobLevel")));
 
-        ContactService contactService = new ContactService();
-        contact = contactService.save(contact);
-
-        if(contact.getId() == null) {
-            Map<String, Object> dataModel = new HashMap<String, Object>();
-            dataModel.put("contact", contact);
-            dataModel.put("flash.message", "Cannot save contact!");
-
-            render(request, response, "contact/create", dataModel);
-        } else {
-            response.sendRedirect("show?id=" + contact.getId());
-        }
+        return contact;
     }
 }
