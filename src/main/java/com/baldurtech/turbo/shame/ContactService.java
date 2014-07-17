@@ -32,7 +32,20 @@ public class ContactService {
 
         System.out.println(sql);
 
-        contact.setId(998998L);
+        DatabaseManager db = new DatabaseManager();
+        db.executeUpdate(sql);
+
+        try {
+            if(db.resultSet != null) {
+                db.resultSet.next();
+                contact.setId(db.resultSet.getLong(1));
+            }
+        } catch(SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+        db.close();
+
         return contact;
     }
 

@@ -29,6 +29,25 @@ public class DatabaseManager {
         return this;
     }
 
+    public DatabaseManager executeUpdate(String sql) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (Exception ex) {
+            // handle the error
+        }
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/baldurcontacts?user=baldurtech&password=baldurtechpwd");
+            statement = connection.createStatement();
+            statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            resultSet = statement.getGeneratedKeys();
+        } catch(SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+        return this;
+    }
+
     public void close() {
         if(resultSet != null) {
             try {
