@@ -17,5 +17,14 @@ public class ContactCreateServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         response.getWriter().println("Yeah! Hang Zai has saved.");
+        response.getWriter().println(request.getParameter("name"));
+        response.getWriter().println(request.getParameter("mobile"));
+        response.getWriter().println(request.getParameter("vpmn"));
+        response.getWriter().println(request.getParameter("email"));
+        response.getWriter().println(request.getParameter("homeAddress"));
+        response.getWriter().println(request.getParameter("officeAddress"));
+        response.getWriter().println(request.getParameter("memo"));
+        response.getWriter().println(request.getParameter("job"));
+        response.getWriter().println(request.getParameter("jobLevel"));
     }
 }
