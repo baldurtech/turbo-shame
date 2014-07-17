@@ -47,5 +47,6 @@ Contact contact = (Contact) request.getAttribute("contact");
         <td>${contact.jobLevel}</td>
       </tr>
     </table>
+    <a href="list">List all contacts</a>
   </body>
 </html>
