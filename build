@@ -1,0 +1,14 @@
+#!/bin/sh
+
+rm -rf target/webapp
+
+cp -r src/main/webapp target/
+cp -r target/classes target/webapp/WEB-INF/
+
+cp -r lib target/webapp/WEB-INF/
+[[ -d lib-runtime ]] && cp lib-runtime/* target/webapp/WEB-INF/lib/
+rm target/webapp/WEB-INF/lib/servlet-api.jar
+
+jar cf target/webapp.war -C target/webapp .
+
+echo "Build done."
